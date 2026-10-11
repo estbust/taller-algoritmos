@@ -1,0 +1,743 @@
+/* ============================================================================
+   ESTILOS DEL TALLER DE ALGORITMOS EN JAVASCRIPT
+   Archivo: styles.css
+   Características:
+   - Sistema de variables CSS para Tema Oscuro y Tema Claro
+   - Diseño responsivo Mobile-First con CSS Grid y Flexbox
+   - Micro-interacciones, estados de validación y estética moderna
+   ============================================================================ */
+
+:root,
+[data-theme="dark"] {
+  --bg-primary: #0b0f19;
+  --bg-secondary: #111827;
+  --bg-card: rgba(17, 24, 39, 0.85);
+  --bg-input: #1e293b;
+  --bg-elevated: #1f2937;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border-color: rgba(148, 163, 184, 0.16);
+  --border-focus: #6366f1;
+  --accent-primary: #6366f1;
+  --accent-primary-hover: #4f46e5;
+  --accent-secondary: #0ea5e9;
+  --success-bg: rgba(16, 185, 129, 0.12);
+  --success-border: rgba(16, 185, 129, 0.4);
+  --success-text: #34d399;
+  --warning-bg: rgba(245, 158, 11, 0.12);
+  --warning-border: rgba(245, 158, 11, 0.4);
+  --warning-text: #fbbf24;
+  --error-bg: rgba(239, 68, 68, 0.12);
+  --error-border: rgba(239, 68, 68, 0.4);
+  --error-text: #f87171;
+  --info-bg: rgba(14, 165, 233, 0.1);
+  --info-border: rgba(14, 165, 233, 0.3);
+  --info-text: #38bdf8;
+  --shadow-card: 0 12px 32px -8px rgba(0, 0, 0, 0.45);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+}
+
+[data-theme="light"] {
+  --bg-primary: #f1f5f9;
+  --bg-secondary: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.94);
+  --bg-input: #f8fafc;
+  --bg-elevated: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-color: rgba(15, 23, 42, 0.12);
+  --border-focus: #4f46e5;
+  --accent-primary: #4f46e5;
+  --accent-primary-hover: #4338ca;
+  --accent-secondary: #0284c7;
+  --success-bg: rgba(16, 185, 129, 0.1);
+  --success-border: rgba(5, 150, 105, 0.35);
+  --success-text: #047857;
+  --warning-bg: rgba(245, 158, 11, 0.12);
+  --warning-border: rgba(217, 119, 6, 0.35);
+  --warning-text: #b45309;
+  --error-bg: rgba(239, 68, 68, 0.1);
+  --error-border: rgba(220, 38, 38, 0.35);
+  --error-text: #b91c1c;
+  --info-bg: rgba(2, 132, 199, 0.08);
+  --info-border: rgba(2, 132, 199, 0.25);
+  --info-text: #0369a1;
+  --shadow-card: 0 10px 25px -6px rgba(15, 23, 42, 0.08);
+}
+
+/* Reset y base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-primary);
+  background-image:
+    radial-gradient(circle at 12% 10%, rgba(99, 102, 241, 0.12), transparent 32%),
+    radial-gradient(circle at 88% 15%, rgba(14, 165, 233, 0.1), transparent 30%);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Outfit", "Inter", sans-serif;
+  line-height: 1.25;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--bg-elevated);
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.contenedor {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* Barra superior */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  gap: 1rem;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.marca-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #ffffff;
+  font-family: "Outfit", sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+}
+
+.marca-titulo {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.marca-subtitulo {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.btn-tema {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-tema:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+/* Contenido principal */
+.layout-principal {
+  flex: 1;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.hero-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.etiqueta-fase {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-secondary);
+  background: var(--info-bg);
+  border: 1px solid var(--info-border);
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  margin-bottom: 0.65rem;
+}
+
+.hero-texto h2 {
+  font-size: 1.65rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-texto p {
+  color: var(--text-secondary);
+  max-width: 68ch;
+}
+
+.hero-metricas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.metrica-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.25rem;
+  min-width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.metrica-valor {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent-primary);
+}
+
+.metrica-label {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Grid de desafíos */
+.grid-desafios {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+}
+
+.tarjeta-desafio {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.tarjeta-desafio:hover {
+  border-color: rgba(99, 102, 241, 0.35);
+}
+
+.desafio-identificador {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.numero-desafio {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #ffffff;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+}
+
+.categoria-desafio {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.tarjeta-cabecera h3 {
+  font-size: 1.35rem;
+  margin-bottom: 0.45rem;
+}
+
+.descripcion-desafio {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+/* Formularios y controles */
+.formulario-desafio {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.grupo-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.etiqueta-campo {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.fila-input-accion {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.input-control {
+  flex: 1;
+  min-width: 150px;
+  background: var(--bg-input);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.95rem;
+  font-size: 0.98rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-control:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.22);
+}
+
+.input-control:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  font-family: inherit;
+  font-size: 0.93rem;
+  font-weight: 600;
+  padding: 0.7rem 1.2rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primario {
+  background: var(--accent-primary);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primario:hover:not(:disabled) {
+  background: var(--accent-primary-hover);
+}
+
+.btn-secundario {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.btn-secundario:hover:not(:disabled) {
+  border-color: var(--accent-primary);
+}
+
+.btn-fantasma {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+.btn-fantasma:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+.btn-sm {
+  padding: 0.38rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.btn-bloque {
+  width: 100%;
+}
+
+/* Chips rápidos Desafío 1 */
+.barra-chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.chips-titulo {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-right: 0.25rem;
+}
+
+.chip-anio {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.chip-anio:hover {
+  color: var(--text-primary);
+  border-color: var(--accent-primary);
+  background: var(--info-bg);
+}
+
+/* Cuadrícula de 10 números (Desafío 2) */
+.cabecera-controles-arreglo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.acciones-secundarias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.grid-arreglo-10 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+}
+
+.casilla-arreglo {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.casilla-arreglo label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: space-between;
+}
+
+.casilla-arreglo label span {
+  color: var(--text-muted);
+  font-family: ui-monospace, monospace;
+}
+
+.casilla-arreglo .input-control {
+  min-width: 0;
+  padding: 0.45rem 0.55rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.casilla-destacada-mayor {
+  border-color: var(--success-text);
+  background: var(--success-bg);
+  transform: translateY(-2px);
+}
+
+.input-destacado-mayor {
+  border-color: var(--success-text) !important;
+  color: var(--success-text) !important;
+  font-weight: 800 !important;
+}
+
+/* Desafío 3: Juego Adivina el Número */
+.cabecera-juego {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.panel-contador-vidas {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-width: 190px;
+}
+
+.contador-etiqueta {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.contador-numero {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--accent-primary);
+}
+
+.contador-numero small {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.barra-indicadores-intentos {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.55rem;
+}
+
+.indicador-vida {
+  text-align: center;
+  padding: 0.45rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.vida-disponible {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.vida-usada {
+  background: var(--warning-bg);
+  border-color: var(--warning-border);
+  color: var(--warning-text);
+}
+
+.vida-acierto {
+  background: var(--success-bg);
+  border-color: var(--success-border);
+  color: var(--success-text);
+}
+
+/* Paneles de resultado */
+.panel-resultado {
+  padding: 1rem 1.15rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  font-size: 0.94rem;
+  line-height: 1.5;
+  transition: all 0.2s ease;
+}
+
+.panel-resultado small {
+  display: inline-block;
+  margin-top: 0.25rem;
+  opacity: 0.9;
+}
+
+.estado-info {
+  background: var(--info-bg);
+  border-color: var(--info-border);
+  color: var(--info-text);
+}
+
+.estado-exito {
+  background: var(--success-bg);
+  border-color: var(--success-border);
+  color: var(--success-text);
+}
+
+.estado-alerta {
+  background: var(--warning-bg);
+  border-color: var(--warning-border);
+  color: var(--warning-text);
+}
+
+.estado-error {
+  background: var(--error-bg);
+  border-color: var(--error-border);
+  color: var(--error-text);
+}
+
+/* Historial del juego */
+.contenedor-historial {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.titulo-historial {
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.lista-historial {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.lista-historial:empty::before {
+  content: "Aún no se han realizado intentos en esta partida.";
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.item-historial {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+}
+
+.historial-turno {
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.historial-pista {
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.badge-alto,
+.badge-bajo {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+  border: 1px solid var(--warning-border);
+}
+
+.badge-ganado {
+  background: var(--success-bg);
+  color: var(--success-text);
+  border: 1px solid var(--success-border);
+}
+
+/* Footer */
+.footer {
+  border-top: 1px solid var(--border-color);
+  padding: 1.25rem 0;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* Media Queries para Tablet y Escritorio */
+@media (min-width: 640px) {
+  .grid-arreglo-10 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .cabecera-juego {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 960px) {
+  .hero-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .grid-desafios {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tarjeta-ancho-completo {
+    grid-column: 1 / -1;
+  }
+}

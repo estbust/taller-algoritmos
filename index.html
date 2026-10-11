@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taller de Algoritmos en JavaScript — Panel Interactivo</title>
+  <meta name="description" content="Interfaz interactiva para probar y visualizar los 3 desafíos del Taller de Algoritmos en JavaScript: Año Bisiesto, Número Mayor y Juego Adivina el Número Secreto." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Barra superior de navegación -->
+  <header class="topbar">
+    <div class="contenedor topbar-inner">
+      <div class="marca">
+        <span class="marca-badge">JS</span>
+        <div>
+          <h1 class="marca-titulo">Taller de Algoritmos</h1>
+          <p class="marca-subtitulo">Condicionales • Ciclos y Arreglos • Estructuras Combinadas</p>
+        </div>
+      </div>
+
+      <button type="button" id="btn-tema" class="btn-tema" aria-label="Alternar tema claro u oscuro">
+        <span id="icono-tema" aria-hidden="true">☀️</span>
+        <span id="texto-tema">Modo Claro</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Contenido principal con los 3 desafíos -->
+  <main class="contenedor layout-principal">
+    <!-- Banner introductorio -->
+    <section class="hero-card" aria-label="Introducción del taller">
+      <div class="hero-texto">
+        <span class="etiqueta-fase">Laboratorio Interactivo</span>
+        <h2>Explora y pon a prueba los 3 desafíos en tiempo real</h2>
+        <p>
+          Cada tarjeta está conectada directamente a las funciones algorítmicas de
+          <code>taller-algoritmos.js</code>. Ingresa tus propios datos o utiliza los controles rápidos para verificar cada caso.
+        </p>
+      </div>
+      <div class="hero-metricas">
+        <div class="metrica-item">
+          <span class="metrica-valor">3</span>
+          <span class="metrica-label">Desafíos Activos</span>
+        </div>
+        <div class="metrica-item">
+          <span class="metrica-valor">16/16</span>
+          <span class="metrica-label">Asserts QA</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid-desafios">
+      <!-- ==================================================================
+           DESAFÍO 1: CONDICIONALES SIMPLES (AÑO BISIESTO)
+           ================================================================== -->
+      <article class="tarjeta-desafio" id="seccion-desafio-1">
+        <div class="tarjeta-cabecera">
+          <div class="desafio-identificador">
+            <span class="numero-desafio">Desafío 01</span>
+            <span class="categoria-desafio">Condicionales Simples</span>
+          </div>
+          <h3>Determinador de Año Bisiesto</h3>
+          <p class="descripcion-desafio">
+            Evalúa si un año del calendario gregoriano tiene 366 días (divisible entre 4, excepto múltiplos de 100 a menos que también sean divisibles entre 400).
+          </p>
+        </div>
+
+        <form id="form-bisiesto" class="formulario-desafio" novalidate>
+          <div class="grupo-campo">
+            <label for="input-anio" class="etiqueta-campo">Ingresa un año a verificar</label>
+            <div class="fila-input-accion">
+              <input
+                type="number"
+                id="input-anio"
+                name="anio"
+                class="input-control"
+                placeholder="Ej. 2024"
+                value="2024"
+                min="1"
+                step="1"
+                required
+              />
+              <button type="submit" id="btn-evaluar-anio" class="btn btn-primario">
+                Evaluar Año
+              </button>
+            </div>
+          </div>
+
+          <!-- Botones rápidos para probar casos clave -->
+          <div class="barra-chips" aria-label="Años de prueba rápida">
+            <span class="chips-titulo">Pruebas rápidas:</span>
+            <button type="button" class="chip-anio" data-anio="2024">2024 (Bisiesto)</button>
+            <button type="button" class="chip-anio" data-anio="2023">2023 (Común)</button>
+            <button type="button" class="chip-anio" data-anio="2000">2000 (Secular ÷400)</button>
+            <button type="button" class="chip-anio" data-anio="1900">1900 (Secular ÷100)</button>
+          </div>
+        </form>
+
+        <div id="resultado-bisiesto" class="panel-resultado estado-info" role="status" aria-live="polite">
+          Ingresa un año y presiona <strong>"Evaluar Año"</strong> para comprobar si es bisiesto.
+        </div>
+      </article>
+
+      <!-- ==================================================================
+           DESAFÍO 2: CICLOS Y ARREGLOS (NÚMERO MAYOR EN 10 NÚMEROS)
+           ================================================================== -->
+      <article class="tarjeta-desafio" id="seccion-desafio-2">
+        <div class="tarjeta-cabecera">
+          <div class="desafio-identificador">
+            <span class="numero-desafio">Desafío 02</span>
+            <span class="categoria-desafio">Ciclos y Arreglos</span>
+          </div>
+          <h3>Encontrar el Número Mayor (10 Números)</h3>
+          <p class="descripcion-desafio">
+            Recorre un arreglo fijo de 10 posiciones mediante un ciclo <code>for</code>, compara elemento por elemento e identifica cuál es el valor más grande.
+          </p>
+        </div>
+
+        <form id="form-mayor" class="formulario-desafio" novalidate>
+          <div class="cabecera-controles-arreglo">
+            <span class="etiqueta-campo">Arreglo de 10 números</span>
+            <div class="acciones-secundarias">
+              <button type="button" id="btn-llenar-aleatorio" class="btn btn-secundario btn-sm">
+                🎲 Generar Aleatorios
+              </button>
+              <button type="button" id="btn-llenar-negativos" class="btn btn-secundario btn-sm">
+                ➖ Caso Negativos
+              </button>
+              <button type="button" id="btn-limpiar-arreglo" class="btn btn-fantasma btn-sm">
+                Limpiar
+              </button>
+            </div>
+          </div>
+
+          <!-- Cuadrícula de 10 casillas numéricas -->
+          <div class="grid-arreglo-10" role="group" aria-label="10 números del arreglo">
+            <div class="casilla-arreglo">
+              <label for="num-0">Posición #1 <span>[0]</span></label>
+              <input type="number" id="num-0" class="input-control input-numero-arreglo" value="15" step="any" required />
+            </div>
+            <div class="casilla-arreglo">
+              <label for="num-1">Posición #2 <span>[1]</span></label>
+              <input type="number" id="num-1" class="input-control input-numero-arreglo" value="42" step="any" required />
+            </div>
+            <div class="casilla-arreglo">
+              <label for="num-2">Posición #3 <span>[2]</span></label>
+              <input type="number" id="num-2" class="input-control input-numero-arreglo" value="8" step="any" required />
+            </div>
+            <div class="casilla-arreglo">
+              <label for="num-3">Posición #4 <span>[3]</span></label>
+              <input type="number" id="num-3" class="input-control input-numero-arreglo" value="99" step="any" required />
+            </div>
+            <div class="casilla-arreglo">
+              <label for="num-4">Posición #5 <span>[4]</span></label>
+              <input type="number" id="num-4" class="input-control input-numero-arreglo" value="23" step="any" required />
+            </div>
+            <div class="casilla-arreglo">
+              <label for="num-5">Posición #6 <span>[5]</span></label>
+              <input type="number" id="num-5" class="input-control input-numero-arreglo" value="4" step="any" required />
+            </div>
+            <div class="casilla-arreglo">
+              <label for="num-6">Posición #7 <span>[6]</span></label>
+              <input type="number" id="num-6" class="input-control input-numero-arreglo" value="77" step="any" required />
+            </div>
+            <div class="casilla-arreglo">
+              <label for="num-7">Posición #8 <span>[7]</span></label>
+              <input type="number" id="num-7" class="input-control input-numero-arreglo" value="56" step="any" required />
+            </div>
+            <div class="casilla-arreglo">
+              <label for="num-8">Posición #9 <span>[8]</span></label>
+              <input type="number" id="num-8" class="input-control input-numero-arreglo" value="31" step="any" required />
+            </div>
+            <div class="casilla-arreglo">
+              <label for="num-9">Posición #10 <span>[9]</span></label>
+              <input type="number" id="num-9" class="input-control input-numero-arreglo" value="64" step="any" required />
+            </div>
+          </div>
+
+          <button type="submit" id="btn-encontrar-mayor" class="btn btn-primario btn-bloque">
+            🔍 Encontrar el Número Más Grande
+          </button>
+        </form>
+
+        <div id="resultado-mayor" class="panel-resultado estado-info" role="status" aria-live="polite">
+          Presiona <strong>"Encontrar el Número Más Grande"</strong> para recorrer los 10 números y destacar el mayor.
+        </div>
+      </article>
+
+      <!-- ==================================================================
+           DESAFÍO 3: COMBINACIÓN DE ESTRUCTURAS (ADIVINA EL NÚMERO SECRETO)
+           ================================================================== -->
+      <article class="tarjeta-desafio tarjeta-ancho-completo" id="seccion-desafio-3">
+        <div class="tarjeta-cabecera cabecera-juego">
+          <div>
+            <div class="desafio-identificador">
+              <span class="numero-desafio">Desafío 03</span>
+              <span class="categoria-desafio">Combinación de Estructuras</span>
+            </div>
+            <h3>Juego: Adivina el Número Secreto (1 al 100)</h3>
+            <p class="descripcion-desafio">
+              La computadora elige un número secreto al azar entre 1 y 100. Tienes un máximo de <strong>5 intentos</strong>.
+              Tras cada intento fallido recibirás una pista indicando si <em>"El número es más alto"</em> o <em>"El número es más bajo"</em>.
+            </p>
+          </div>
+
+          <div class="panel-contador-vidas">
+            <span class="contador-etiqueta">Intentos disponibles</span>
+            <div class="contador-numero">
+              <span id="intentos-restantes">5</span><small>/5</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Barra visual de los 5 intentos -->
+        <div id="indicadores-intentos" class="barra-indicadores-intentos" aria-label="Estado de los 5 intentos"></div>
+
+        <form id="form-adivina" class="formulario-desafio formulario-juego" novalidate>
+          <div class="grupo-campo">
+            <label for="input-intento" class="etiqueta-campo">Tu número (entre 1 y 100)</label>
+            <div class="fila-input-accion">
+              <input
+                type="number"
+                id="input-intento"
+                name="intento"
+                class="input-control"
+                placeholder="Escribe un número del 1 al 100..."
+                min="1"
+                max="100"
+                step="1"
+                required
+              />
+              <button type="submit" id="btn-intentar" class="btn btn-primario">
+                🎯 Probar Intento
+              </button>
+              <button type="button" id="btn-reiniciar-juego" class="btn btn-secundario">
+                🔄 Nueva Partida
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div id="resultado-adivina" class="panel-resultado estado-info" role="status" aria-live="polite">
+          🎲 La computadora ha elegido un número secreto entre <strong>1 y 100</strong>. ¡Tienes <strong>5 intentos</strong> para adivinarlo!
+        </div>
+
+        <!-- Registro de intentos realizados en la partida actual -->
+        <div class="contenedor-historial">
+          <h4 class="titulo-historial">Historial de turnos de la partida</h4>
+          <ul id="historial-intentos" class="lista-historial" aria-live="polite"></ul>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="contenedor footer-inner">
+      <p>Taller de Algoritmos en JavaScript • Lógica y UI integradas con <code>taller-algoritmos.js</code></p>
+    </div>
+  </footer>
+
+  <!-- Enlace al archivo único de lógica y pruebas -->
+  <script src="taller-algoritmos.js" defer></script>
+</body>
+</html>
